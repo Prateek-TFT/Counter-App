@@ -62,6 +62,10 @@ export class Wrapper extends Component {
                   placeholder="Enter No..."
                   type="number"
                   onChange={this.onchangeHandler}
+                  value={
+                    this.state.counterinputValue !== 0 &&
+                    this.state.counterinputValue
+                  }
                 ></input>
               )}
             </div>

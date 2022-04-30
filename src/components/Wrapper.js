@@ -7,8 +7,10 @@ export class Wrapper extends Component {
     this.state = {
       showCounter: true,
       showWelcome: true,
-      counterinputValue: 0,
+      startTimer: false,
+      startFrom: 0,
       counterValue: 0,
+      counterTimer: null,
     };
   }
   componentDidMount() {
@@ -19,31 +21,43 @@ export class Wrapper extends Component {
   componentWillUnmount() {
     clearInterval(this.myInterval);
   }
-  doIntervalChange = () => {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.startTimer !== this.state.startTimer) {
+      if (this.state.counterTimer) {
+        clearInterval(this.state.counterTimer);
+      }
+      if (this.state.startTimer) {
+        this.setState({
+          counterTimer: setInterval(this.increaseCounter, 1000),
+        });
+      }
+    }
+  }
+  increaseCounter = () => {
+    this.setState((prevState) => ({
+      counterValue: prevState.counterValue + 1,
+    }));
+  };
+  startButtonHandler = () => {
     this.setState({
+      startTimer: true,
       showCounter: true,
+      counterValue: this.state.startFrom,
     });
-    this.myInterval = setInterval(() => {
-      this.setState((prevstate) => ({
-        counterValue: prevstate.counterValue + 1,
-      }));
-    }, 1000);
   };
-  startHandler = () => {
-    this.setState({ counterValue: this.state.counterinputValue });
-    clearInterval(this.myInterval);
-    this.doIntervalChange();
+  deleteButtonHandler = () => {
+    this.setState({
+      counterTimer: null,
+      startTimer: false,
+      counterValue: 0,
+      showCounter: false,
+    });
   };
-  DeleteHandler = () => {
-    clearInterval(this.myInterval);
-    this.setState({ showCounter: false, counterinputValue: 0 });
-  };
-  stopHandler = () => {
-    clearInterval(this.myInterval);
-    this.setState({ counterinputValue: 0 });
+  stopButtonHandler = () => {
+    this.setState({ startTimer: false, startFrom: 0 });
   };
   onchangeHandler = (e) => {
-    this.setState({ counterinputValue: Number(e.target.value) });
+    this.setState({ startFrom: Number(e.target.value) });
   };
   render() {
     return (
@@ -62,19 +76,16 @@ export class Wrapper extends Component {
                   placeholder="Enter No..."
                   type="number"
                   onChange={this.onchangeHandler}
-                  value={
-                    this.state.counterinputValue !== 0 &&
-                    this.state.counterinputValue
-                  }
+                  value={this.state.startFrom !== 0 && this.state.startFrom}
                 ></input>
               )}
             </div>
           )}
           {!this.state.showWelcome && (
             <div className={styles.buttonDiv}>
-              <button onClick={this.startHandler}>Start</button>
-              <button onClick={this.stopHandler}>Stop</button>
-              <button onClick={this.DeleteHandler}>Delete</button>
+              <button onClick={this.startButtonHandler}>Start</button>
+              <button onClick={this.stopButtonHandler}>Stop</button>
+              <button onClick={this.deleteButtonHandler}>Delete</button>
             </div>
           )}
         </div>

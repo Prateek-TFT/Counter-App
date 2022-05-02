@@ -19,15 +19,18 @@ export const Wrapper = () => {
     clearInterval(startInterval);
     setStartInterval(setInterval(run, 1000));
     setCounterValue(counterInputValue);
+    setCounterInputValue(0);
   };
   //function to stop the counter.
   const stopHandler = () => {
     clearInterval(startInterval);
+    setCounterInputValue(0);
   };
   //function to Remove Counter Component from DOM and clearing the counter value.
   const DeleteHandler = () => {
     setShowCounter(false);
     setCounterValue(0);
+    setCounterInputValue(0);
   };
   return (
     <div className={styles.container}>
@@ -40,6 +43,7 @@ export const Wrapper = () => {
               placeholder="Enter No..."
               type="number"
               onChange={onChangeHandler}
+              value={counterInputValue !== 0 && counterInputValue}
             ></input>
           )}
         </div>

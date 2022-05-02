@@ -1,5 +1,5 @@
 .container {
-  background-color: #8197a4;
+  background-image: linear-gradient(to bottom right, #0f171e, #8197a4, white);
   display: flex;
   height: 100vh;
   width: 100vw;
@@ -62,8 +62,8 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 10vw;
   margin: 10px;
   height: 5vh;
-  color: #0f171e;
-  background-color: white;
+  color: black;
+  background-image: linear-gradient(to bottom right, white, #8197a4);
   border: 0;
   border-radius: 5px;
   font-weight: 500;
@@ -72,11 +72,13 @@ input[type="number"]::-webkit-outer-spin-button {
   font-family: Amazon Ember, Amazon Arabic Ember, Arial, sans-serif;
 }
 .buttonDiv button:hover {
-  box-shadow: 0 0 5px 1px gray;
-  font-size: 1.2rem;
+  box-shadow: 0 0 5px 1px black;
   font-weight: 520;
+  background-image: linear-gradient(to bottom left, #8197a4, #1f3344);
+  color: white;
+  outline: 0px;
+  transition: 0.1s ease-in;
 }
-
 @media screen and (max-width: 750px) {
   .box {
     height: 70vh;

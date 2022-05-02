@@ -8,7 +8,7 @@ export class Wrapper extends Component {
       showCounter: true,
       showWelcome: true,
       startTimer: false,
-      startFrom: 0,
+      startFrom: "",
       counterValue: 0,
       counterTimer: null,
     };
@@ -40,21 +40,22 @@ export class Wrapper extends Component {
   };
   startButtonHandler = () => {
     this.setState({
+      counterValue: Number(this.state.startFrom),
       startTimer: true,
       showCounter: true,
-      counterValue: this.state.startFrom,
+      startFrom: "",
     });
   };
   deleteButtonHandler = () => {
     this.setState({
-      counterTimer: null,
-      startTimer: false,
       counterValue: 0,
+      startTimer: false,
       showCounter: false,
+      startFrom: "",
     });
   };
   stopButtonHandler = () => {
-    this.setState({ startTimer: false, startFrom: 0 });
+    this.setState({ startTimer: false, startFrom: "" });
   };
   onchangeHandler = (e) => {
     this.setState({ startFrom: Number(e.target.value) });
@@ -76,8 +77,8 @@ export class Wrapper extends Component {
                   placeholder="Enter No..."
                   type="number"
                   onChange={this.onchangeHandler}
-                  value={this.state.startFrom !== 0 && this.state.startFrom}
-                ></input>
+                  value={this.state.startFrom}
+                />
               )}
             </div>
           )}
